@@ -1,6 +1,6 @@
-# Fantom PWA Wallet
+# ANB PWA Wallet
 
-JavaScript and Vue based Fantom pwa wallet.
+JavaScript and Vue based ANB pwa wallet.
 
 We are using:
 * Node / NPM
