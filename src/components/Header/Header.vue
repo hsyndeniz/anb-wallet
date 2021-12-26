@@ -4,7 +4,13 @@
             <div class="row no-collapse align-items-center">
                 <div class="col">
                     <router-link to="/" class="logo" :aria-label="$t('view_home.back_to_home')">
-                        <img src="fantom-logo.svg" alt="" class="not-fluid" />
+                        <img
+                            style="height: 80px !important; width: 80px;"
+                            src="https://anbswap.com/logo.png"
+                            alt="logo"
+                            width="80"
+                            height="80"
+                        />
                     </router-link>
                 </div>
             </div>

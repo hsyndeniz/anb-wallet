@@ -112,7 +112,7 @@ export default {
             columns: [
                 {
                     name: 'amount',
-                    label: 'Amount (FTM)',
+                    label: 'Amount (ANB)',
                     formatter: (_value) => {
                         return WEIToFTM(_value);
                     },

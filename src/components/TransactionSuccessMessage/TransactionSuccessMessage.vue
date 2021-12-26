@@ -43,7 +43,8 @@ import FCard from '../core/FCard/FCard.vue';
 import appConfig from '../../../app.config.js';
 import FEllipsis from '../core/FEllipsis/FEllipsis.vue';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-import gql from 'graphql-tag';
+//import gql from 'graphql-tag';
+import axios from 'axios';
 
 export default {
     components: { FEllipsis, FCard, PulseLoader },
@@ -130,26 +131,28 @@ export default {
         },
 
         async _verifyTransaction() {
-            const data = await this.$apollo.query({
-                query: gql`
-                    query TransactionByHash($hash: Bytes32!) {
-                        transaction(hash: $hash) {
-                            status
-                        }
-                    }
-                `,
-                variables: {
-                    hash: this.tx,
-                },
-                fetchPolicy: 'network-only',
+            let _tx = await axios.post('https://xapi.anbscan.com', {
+                jsonrpc: '2.0',
+                method: 'eth_getTransactionByHash',
+                params: [this.tx],
+                id: 1,
             });
+            console.warn(_tx);
 
-            if (data.data.transaction.status === null) {
+            console.log(_tx.data.result.blockNumber);
+            console.log(typeof _tx.data.result.blockNumber);
+            console.log(_tx.data.result.blockNumber === null);
+            console.log(typeof _tx.data.result.blockNumber === undefined);
+            if (_tx.data.result.blockNumber === undefined) {
                 this.verifyTransaction();
             } else {
-                this.transactionSuccess = parseInt(data.data.transaction.status, 16) === 1;
+                console.log(parseInt(_tx.data.result.blockNumber, 16));
+                this.transactionSuccess = parseInt(_tx.data.result.blockNumber, 16);
+                console.log(this.transactionSuccess);
+                console.log(isNaN(this.transactionSuccess));
+                console.log(isNaN(parseInt(_tx.data.result.blockNumber, 16)));
 
-                if (!this.transactionSuccess) {
+                if (isNaN(this.transactionSuccess)) {
                     this.dTitle = 'Transaction Error';
                 }
 

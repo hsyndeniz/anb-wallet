@@ -8,6 +8,19 @@ import './metamask.types.js';
 const OPERA_CHAIN_ID = appConfig.chainId;
 
 /** @type {MetamaskChain} */
+export const ANB_MAINNET = {
+    chainId: appConfig.anb.chainId,
+    chainName: 'ANB Mainnet',
+    nativeCurrency: {
+        name: 'ANB',
+        symbol: 'ANB',
+        decimals: 18,
+    },
+    rpcUrls: [appConfig.anb.rpc],
+    blockExplorerUrls: [appConfig.anb.explorerUrl],
+};
+
+/** @type {MetamaskChain} */
 export const OPERA_MAINNET = {
     chainId: appConfig.mainnet.chainId,
     chainName: 'Fantom Opera Mainnet',
@@ -107,7 +120,9 @@ export class Metamask {
      * @return {boolean}
      */
     isCorrectChainId() {
-        return this._provider && this._provider.chainId === OPERA_CHAIN_ID;
+        //return this._provider && this._provider.chainId === OPERA_CHAIN_ID;
+        console.log(OPERA_CHAIN_ID);
+        return this._provider && this._provider.chainId === appConfig.anb.chainId;
     }
 
     /**
@@ -145,6 +160,8 @@ export class Metamask {
     }
 
     async signTransaction(_tx, _address) {
+        console.log(_tx);
+        console.log(_address);
         if (this._provider) {
             try {
                 _tx.from = _address;

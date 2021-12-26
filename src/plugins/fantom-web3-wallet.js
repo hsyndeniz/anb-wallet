@@ -6,6 +6,7 @@ import Accounts from 'web3-eth-accounts';
 import { fFetch } from '@/plugins/ffetch.js';
 import { isArray, isObject } from '@/utils';
 import { toBigNumber, toHex } from '@/utils/big-number.js';
+import axios from 'axios';
 
 const bip39 = require('bip39');
 const Hdkey = require('hdkey');
@@ -350,6 +351,24 @@ export class FantomWeb3Wallet {
         return data.data ? data.data.account : {};
     }
 
+    async get_Balance(address) {
+        return new Promise((resolve, reject) => {
+            axios
+                .post('https://xapi.anbscan.com', {
+                    jsonrpc: '2.0',
+                    method: 'eth_getBalance',
+                    params: [address, 'latest'],
+                    id: 1,
+                })
+                .then((balance) => {
+                    resolve(balance.data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
+
     async getEstimateGas(_from = '', _to = '', _data = null, _value = 0) {
         // console.log(_from, _to, _data);
         try {
@@ -377,7 +396,24 @@ export class FantomWeb3Wallet {
                 'estimateGas'
             );
 
-            let estimateGas = data.data ? data.data.estimateGas : '';
+            let _estimateGas = await axios.post('https://xapi.anbscan.com', {
+                jsonrpc: '2.0',
+                method: 'eth_estimateGas',
+                params: [
+                    {
+                        from: _from,
+                        to: _to,
+                        value: _value,
+                    },
+                ],
+                id: 1,
+            });
+            console.log(data);
+            console.log('_estimateGas');
+            console.log(_estimateGas);
+
+            //let estimateGas = data.data ? data.data.estimateGas : '';
+            let estimateGas = _estimateGas.data ? _estimateGas.data.result : '';
 
             if (estimateGas) {
                 estimateGas = parseInt(estimateGas, 16);
@@ -392,6 +428,7 @@ export class FantomWeb3Wallet {
                 estimateGas = estimateGas.join(',');
             }
 
+            console.warn(estimateGas);
             return estimateGas;
         } catch (_error) {
             return _error;
@@ -411,6 +448,17 @@ export class FantomWeb3Wallet {
             `,
         });
         let { gasPrice } = data.data;
+        console.log(data);
+
+        let _gasPrice = await axios.post('https://xapi.anbscan.com', {
+            jsonrpc: '2.0',
+            method: 'eth_gasPrice',
+            params: [],
+            id: 1,
+        });
+        console.log(_gasPrice);
+        gasPrice = _gasPrice.data.result;
+
         const bDoubleGasPrice = toBigNumber(gasPrice).multipliedBy(2);
 
         // double gas price
@@ -429,21 +477,31 @@ export class FantomWeb3Wallet {
      * @return {Promise<string>}
      */
     async getTransactionCount(_address, _inHexFormat) {
-        const data = await this.apolloClient.query({
-            query: gql`
-                query AccountByAddress($address: Address!) {
-                    account(address: $address) {
-                        txCount
-                    }
-                }
-            `,
-            variables: {
-                address: _address,
-            },
-            fetchPolicy: 'network-only',
-        });
+        // const data = await this.apolloClient.query({
+        //     query: gql`
+        //         query AccountByAddress($address: Address!) {
+        //             account(address: $address) {
+        //                 txCount
+        //             }
+        //         }
+        //     `,
+        //     variables: {
+        //         address: _address,
+        //     },
+        //     fetchPolicy: 'network-only',
+        // });
 
-        return _inHexFormat ? data.data.account.txCount : parseInt(data.data.account.txCount);
+        let _txCount = await axios.post('https://xapi.anbscan.com', {
+            jsonrpc: '2.0',
+            method: 'eth_getTransactionCount',
+            params: [_address, 'latest'],
+            id: 1,
+        });
+        console.log('_txCount');
+        console.log(_txCount);
+
+        //return _inHexFormat ? data.data.account.txCount : parseInt(data.data.account.txCount);
+        return _inHexFormat ? _txCount.data.result : parseInt(_txCount.data.result, 16);
     }
 
     /**
@@ -751,6 +809,7 @@ export class FantomWeb3Wallet {
         const nonce = await this.getTransactionCount(from);
         const gasPrice = await this.getGasPrice(true);
         // let gasLimit = to ? await this.getEstimateGas(from, to, null, value) : '';
+        //let w = '0x752C9B44D925DfE9E2048C752104100002754C96';
         let gasLimit = to ? await this.getEstimateGas(from, to, memo ? Web3.utils.asciiToHex(memo) : null, value) : '';
         let error = '';
 
@@ -995,6 +1054,22 @@ export class FantomWeb3Wallet {
      * @return {number}
      */
     getMaxRemainingBalance(_balance, _gasPrice) {
+        const fee = this.getTransactionFee(_gasPrice, GAS_LIMITS.max);
+        const balance = this.toBN(_balance);
+        console.log(fee);
+        console.log(balance);
+
+        return parseFloat(this.WEIToFTM(balance.sub(fee.mul(this.toBN(1)))));
+    }
+
+    /**
+     * Get the remaining balance (in FTM) after deducting transaction fee.
+     *
+     * @param {*} _balance
+     * @param {*} _gasPrice
+     * @return {number}
+     */
+    getMaxRemainingFTMBalance(_balance, _gasPrice) {
         const fee = this.getTransactionFee(_gasPrice, GAS_LIMITS.max);
         const balance = this.toBN(_balance);
 

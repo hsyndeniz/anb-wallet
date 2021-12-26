@@ -23,7 +23,7 @@
         </li>
         <li>
             <div class="row no-collapse">
-                <div class="col-3 f-row-label">Amount (FTM)</div>
+                <div class="col-3 f-row-label">Amount (ANB)</div>
                 <div class="col">
                     {{ amount }}
                 </div>

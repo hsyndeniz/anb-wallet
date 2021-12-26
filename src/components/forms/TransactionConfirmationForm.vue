@@ -203,6 +203,9 @@ export default {
         },
 
         onSubmit(event) {
+            console.log('onSubmit');
+            console.log(event);
+            console.log(this.$refs.atxfuncs.getGasInfo());
             event.detail.data = {
                 ...event.detail.data,
                 ...this.$refs.atxfuncs.getGasInfo(),

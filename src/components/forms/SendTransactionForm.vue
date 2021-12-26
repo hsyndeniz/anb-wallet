@@ -9,7 +9,7 @@
                     <legend v-else class="h2">
                         <div class="cont-with-back-btn">
                             <span>
-                                Send Opera FTM <span class="f-steps"><b>2</b> / 3</span>
+                                Send ANB <span class="f-steps"><b>2</b> / 3</span>
                             </span>
                             <button type="button" class="btn light" @click="onPreviousBtnClick">Back</button>
                         </div>
@@ -390,7 +390,7 @@ export default {
         async onFormSubmit(_event) {
             const { data } = _event.detail;
             const { sendDirection } = this;
-
+            console.log(sendDirection);
             if (this.currentAccount && data.amount) {
                 if (sendDirection === 'OperaToOpera') {
                     data.opera_address = this.resolvedAddress || data.address;
@@ -447,6 +447,8 @@ export default {
         onEntireBalanceClick() {
             const { token } = this;
 
+            console.log(token);
+            console.log(this);
             if (token.address) {
                 this.amount =
                     this.maxRemainingErc20TokenBalance > 0 ? this.maxRemainingErc20TokenBalance.toString() : '0';

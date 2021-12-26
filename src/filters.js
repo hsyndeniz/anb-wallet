@@ -136,9 +136,10 @@ export function formatNumberByLocale(
     if (_currency) {
         options.style = 'currency';
         options.currency = _currency;
+        return '';
+    } else {
+        return new Intl.NumberFormat(filtersOptions.currLocale, options).format(_number);
     }
-
-    return new Intl.NumberFormat(filtersOptions.currLocale, options).format(_number);
 }
 
 /**

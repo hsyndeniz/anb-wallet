@@ -14,6 +14,14 @@ export function WEIToFTM(_value) {
 /**
  * @return {number}
  */
+export function WEIToANB(_value) {
+    // console.log(parseFloat(web3utils.fromWei(_value, 'ether')), _value / WEI_IN_FTM);
+    return _value / WEI_IN_FTM;
+}
+
+/**
+ * @return {number}
+ */
 export function WeiToFtm(_value) {
     return parseFloat(web3utils.fromWei(_value, 'ether'));
 }

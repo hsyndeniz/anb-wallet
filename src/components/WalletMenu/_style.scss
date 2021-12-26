@@ -11,8 +11,10 @@
         text-align: center;
     }
 
-    .wallet-label {
-        display: none;
+    .wallet-div {
+        .wallet-label {
+            display: none;
+        }
     }
 
     .header-logo {
@@ -191,8 +193,11 @@ html[dir="rtl"], body[dir="rtl"] {
 
             .wallet-label {
                 display: inline;
-                font-size: 21px;
-                padding-inline-start: 12px;
+                font-size: 17px;
+                font-weight: bold;
+                padding-inline-start: 8px;
+                display:table-cell;
+                vertical-align:middle;
             }
         }
 

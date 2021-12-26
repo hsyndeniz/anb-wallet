@@ -162,7 +162,7 @@ export default {
                 },
                 {
                     name: 'amount',
-                    label: 'Amount (FTM)',
+                    label: 'Amount (ANB)',
                     itemProp: 'delegation.amount',
                     formatter: (_value) => WEIToFTM(_value),
                     width: '160px',

@@ -10,7 +10,6 @@
     >
         <h3 class="break-word h2 align-center">{{ address }}</h3>
         <vue-q-r-code-component :text="address" class="qr-code" />
-        <slot></slot>
     </f-window>
 </template>
 

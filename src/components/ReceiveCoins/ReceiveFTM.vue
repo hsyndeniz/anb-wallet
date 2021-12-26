@@ -1,7 +1,7 @@
 <template>
     <div class="receive-ftm">
         <div class="align-center">
-            Send your Opera FTM to:
+            Send your ANB to:
 
             <h3 class="address break-word h2" :class="addressCssClass">
                 {{ currentAccount.address }} &nbsp;
@@ -18,11 +18,7 @@
                     :hide-popover-after="3100"
                     class="btn large light same-size round"
                 >
-                    <template #popover-text>
-                        Address copied to clipboard. <br />
-                        Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to
-                        use a different address!
-                    </template>
+                    <template #popover-text>Address copied to clipboard.</template>
                 </f-copy-button>
                 <button class="btn large light same-size round" title="Show QR Code" @click="$refs.qrWindow.show()">
                     <icon data="@/assets/svg/monochrome/Options/QR.svg" width="20" height="20" aria-hidden="true" />
@@ -45,10 +41,7 @@
         </div>
 
         <q-r-code-window ref="qrWindow" :address="currentAccount.address">
-            <f-message type="warning" with-icon>
-                Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to use a
-                different address!
-            </f-message>
+            <f-message type="warning" with-icon></f-message>
         </q-r-code-window>
 
         <f-window

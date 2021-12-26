@@ -2,7 +2,7 @@
     <div class="settingslinks">
         <f-card class="f-card-double-padding">
             <div class="small-container">
-                <p>
+                <!-- <p>
                     <a href="https://fantom.foundation/how-to-use-fantom-wallet/" target="_blank">
                         How to use Fantom fWallet
                     </a>
@@ -12,7 +12,7 @@
                     <a href="https://explorer.fantom.network/" target="_blank">
                         Fantom Explorer
                     </a>
-                </p>
+                </p> -->
 
                 <social-media-links />
             </div>

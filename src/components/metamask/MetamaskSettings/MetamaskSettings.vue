@@ -11,10 +11,10 @@
                             :disabled="addFantomMainnetInProgress"
                             @click="onAddChainClick('mainnet')"
                         >
-                            Add Fantom Opera Mainnet
+                            Add ANB Mainnet
                             <pulse-loader v-if="addFantomMainnetInProgress" color="#fff"></pulse-loader>
                         </button>
-                        <button
+                        <!-- <button
                             id="add_testnet_btn"
                             class="btn large secondary"
                             :disabled="addFantomTestnetInProgress"
@@ -22,19 +22,19 @@
                         >
                             Add Fantom Testnet
                             <pulse-loader v-if="addFantomTestnetInProgress" color="#1969ff"></pulse-loader>
-                        </button>
+                        </button> -->
                     </div>
 
                     <div class="metamasksettings_section">
                         <h3>Assets</h3>
-                        <button
+                        <!-- <button
                             id="add_token_btn"
                             class="btn large"
                             :disabled="addTokenInProgress"
                             @click="onAddTokenClick"
                         >
                             Add Token <pulse-loader v-if="addTokenInProgress" color="#fff"></pulse-loader>
-                        </button>
+                        </button> -->
                         <button
                             id="add_custom_token_btn"
                             class="btn large secondary"
@@ -89,7 +89,7 @@
 
 <script>
 import FCard from '@/components/core/FCard/FCard.vue';
-import { OPERA_MAINNET, OPERA_TESTNET } from '@/plugins/metamask/metamask.js';
+import { OPERA_MAINNET, ANB_MAINNET } from '@/plugins/metamask/metamask.js';
 import FWindow from '@/components/core/FWindow/FWindow.vue';
 import { mapGetters } from 'vuex';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
@@ -177,7 +177,8 @@ export default {
          */
         async onAddChainClick(_type = 'mainnet') {
             const mainnet = _type === 'mainnet';
-            const chain = mainnet ? OPERA_MAINNET : OPERA_TESTNET;
+            //const chain = mainnet ? OPERA_MAINNET : OPERA_TESTNET;
+            const chain = mainnet ? ANB_MAINNET : OPERA_MAINNET;
             const btnId = mainnet ? 'add_mainnet_btn' : 'add_testnet_btn';
 
             if (mainnet) {

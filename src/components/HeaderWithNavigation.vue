@@ -23,7 +23,7 @@
             <div class="body"></div>
             <div class="footer">
                 <div class="copyright">
-                    <a href="https://fantom.foundation/" target="_blank" rel="nofollow">©2020 Fantom Foundation</a>
+                    <a href="https://anbswap.com/" target="_blank" rel="nofollow">©2021 ANB</a>
                 </div>
             </div>
         </div>

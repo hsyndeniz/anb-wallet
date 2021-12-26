@@ -1,10 +1,10 @@
 const appConfig = {
     // app title
-    name: 'Fantom fWallet',
+    name: 'ANB Wallet',
     // app description
-    description: 'Fantom fWallet',
+    description: 'ANB Wallet',
     // app keywords
-    keywords: 'fantom, metamask',
+    keywords: 'anb, metamask',
     // apollo client settings
     apollo: {
         // list of providers. if one of them is unavailable, another is randomly picked
@@ -99,7 +99,7 @@ const appConfig = {
     // pwa settings
     pwa: {
         // name used in pwa manifest
-        name: 'Fantom fWallet',
+        name: 'ANB Wallet',
         categories: ['finance'],
     },
     // determines if app is chrome extension
@@ -109,9 +109,9 @@ const appConfig = {
         // chrome extension version - increase version number, if you want to publish in the chrome web store
         version: '0.0.1',
         // chrome extension name
-        name: 'Fantom fWallet',
+        name: 'ANB Wallet',
         // chrome extension description
-        description: 'Fantom fWallet',
+        description: 'ANB Wallet',
         // output directory for application
         outputDir: 'chrome-extension/dist',
         // output directory for application (relative to outputDir)
@@ -146,6 +146,13 @@ appConfig.mainnet = {
     rpc: appConfig.rpc,
     explorerUrl: appConfig.explorerUrl,
     explorerUrl2: appConfig.explorerUrl2,
+};
+
+appConfig.anb = {
+    chainId: '0x53d',
+    rpc: 'https://xapi.anbscan.com',
+    explorerUrl: 'https://anbscan.com',
+    explorerUrl2: 'https://anbscan.com',
 };
 
 if (appConfig.useTestnet) {

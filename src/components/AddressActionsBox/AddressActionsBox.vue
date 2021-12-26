@@ -8,11 +8,7 @@
                     :hide-popover-after="3100"
                     class="btn large light same-size round"
                 >
-                    <template #popover-text>
-                        Address copied to clipboard. <br />
-                        Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to
-                        use a different address!
-                    </template>
+                    <template #popover-text>Address copied to clipboard.</template>
                 </f-copy-button>
             </li>
             <li>
@@ -68,11 +64,7 @@
                 >
                     <icon data="@/assets/svg/monochrome/Options/Copy.svg" width="20" height="20" aria-hidden="true" />
                     Copy Address
-                    <template #popover-text>
-                        Address copied to clipboard. <br />
-                        Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to
-                        use a different address!
-                    </template>
+                    <template #popover-text>Address copied to clipboard.</template>
                 </f-copy-button>
             </li>
             <li>
@@ -113,10 +105,7 @@
         </ul>
 
         <q-r-code-window ref="qrWindow" :address="currentAccount.address" @window-hide="onWindowHide">
-            <f-message type="warning" with-icon>
-                Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to use a
-                different address!
-            </f-message>
+            <f-message type="warning" with-icon></f-message>
         </q-r-code-window>
 
         <account-settings-window ref="accountSettingsWindow" :account-data="accountData" @window-hide="onWindowHide" />

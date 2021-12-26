@@ -32,11 +32,7 @@
                                 :hide-popover-after="3100"
                                 class="btn large light same-size round"
                             >
-                                <template #popover-text>
-                                    Address copied to clipboard. <br />
-                                    Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20
-                                    you need to use a different address!
-                                </template>
+                                <template #popover-text>Address copied to clipboard.</template>
                             </f-copy-button>
                             <button
                                 class="btn large light same-size round"
@@ -129,10 +125,7 @@
         />
 
         <q-r-code-window ref="qrWindow" :address="contactData.address">
-            <f-message v-show="blockchain === 'fantom'" type="warning" with-icon>
-                Warning: Use this address to receive Opera FTM only. If you are receiving FTM-ERC20 you need to use a
-                different address!
-            </f-message>
+            <f-message v-show="blockchain === 'fantom'" type="warning" with-icon></f-message>
         </q-r-code-window>
     </div>
 </template>

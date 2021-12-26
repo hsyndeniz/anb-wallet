@@ -106,13 +106,14 @@ import FWindow from '../core/FWindow/FWindow.vue';
 import LedgerMessage from '../LedgerMessage/LedgerMessage.vue';
 import TransactionConfirmationForm from '../forms/TransactionConfirmationForm.vue';
 import { mapGetters, mapState } from 'vuex';
-import gql from 'graphql-tag';
+//import gql from 'graphql-tag';
 import { U2FStatus } from '../../plugins/fantom-nano.js';
 import { UPDATE_ACCOUNT_BALANCE } from '../../store/actions.type.js';
 import appConfig from '../../../app.config.js';
 import CoinbaseWalletNoticeWindow from '@/components/windows/CoinbaseWalletNoticeWindow/CoinbaseWalletNoticeWindow.vue';
 import { cloneObject } from '@/utils';
 import { SET_TX_FEE } from '@/store/mutations.type.js';
+import axios from 'axios';
 
 /**
  * Base component for other 'transaction confirmation and send' components.
@@ -254,6 +255,37 @@ export default {
         },
 
         sendTransaction(_rawTransaction) {
+            console.log('i guess this sendTransaction');
+            console.log(_rawTransaction);
+
+            axios
+                .post('https://xapi.anbscan.com', {
+                    jsonrpc: '2.0',
+                    method: 'eth_sendRawTransaction',
+                    params: [_rawTransaction],
+                    id: 1,
+                })
+                .then((_data) => {
+                    console.log(_data);
+                    if (this.onSendTransactionSuccess) {
+                        let txsc = {
+                            data: {
+                                sendTransaction: {
+                                    hash: _data.data.result,
+                                    from: this.currentAccount.address,
+                                    to: this.tx.to,
+                                },
+                            },
+                        };
+                        this.onSendTransactionSuccess(txsc);
+                    }
+                })
+                .catch((_error) => {
+                    console.log(_error);
+                    this.errorMsg = _error;
+                });
+
+            /*
             this.$apollo
                 .mutate({
                     mutation: gql`
@@ -276,10 +308,11 @@ export default {
                 })
                 .catch((_error) => {
                     this.errorMsg = _error;
-                });
+                }); */
         },
 
         async onFFormSubmit(_event) {
+            console.log('onFFormSubmit');
             const { currentAccount } = this;
             const fWallet = this.$fWallet;
             const { data } = _event.detail;
@@ -288,10 +321,15 @@ export default {
 
             data.pwd = '';
 
+            console.log(this.tx);
+
             if (currentAccount && this.tx && fWallet.isValidAddress(this.tx.to)) {
                 this.tx.nonce = await fWallet.getTransactionCount(currentAccount.address);
+
+                console.log(this.tx);
                 this.tx.nonce = `0x${this.tx.nonce.toString(16)}`;
-                this.tx.chainId = appConfig.chainId;
+                this.tx.chainId = appConfig.anb.chainId;
+                console.log(this.tx);
 
                 if (data.gasLimit) {
                     this.tx.gas = data.gasLimit;

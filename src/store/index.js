@@ -637,13 +637,14 @@ export const store = new Vuex.Store({
                 balance = await fWallet.getBalance(account.address, false, true);
                 pendingRewards = getPendingRewards(balance);
 
-                if (account.balance !== balance.balance || !arrayEquals(account.pendingRewards, pendingRewards)) {
-                    balance = await fWallet.getBalance(account.address);
+                let _data = await fWallet.get_Balance(account.address);
+                balance.balance = _data.result;
 
+                if (account.balance !== balance.balance || !arrayEquals(account.pendingRewards, pendingRewards)) {
                     _context.commit(SET_ACCOUNT, {
                         ...account,
-                        balance: balance.balance,
-                        totalBalance: balance.totalValue,
+                        balance: _data.result,
+                        totalBalance: _data.result,
                         pendingRewards,
                         index: i,
                     });
@@ -662,16 +663,17 @@ export const store = new Vuex.Store({
                 let balance = await fWallet.getBalance(account.address, false, true);
                 let pendingRewards = getPendingRewards(balance);
 
+                let _data = await fWallet.get_Balance(account.address);
+                balance.balance = _data.result;
+
                 if (
                     index > -1 &&
                     (account.balance !== balance.balance || !arrayEquals(account.pendingRewards, pendingRewards))
                 ) {
-                    balance = await fWallet.getBalance(account.address);
-
                     _context.commit(SET_ACCOUNT, {
                         ...account,
-                        balance: balance.balance,
-                        totalBalance: balance.totalValue,
+                        balance: _data.result,
+                        totalBalance: _data.result,
                         pendingRewards,
                         index,
                     });

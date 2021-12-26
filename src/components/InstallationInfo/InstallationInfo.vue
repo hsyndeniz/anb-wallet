@@ -1,7 +1,7 @@
 <template>
     <div class="installation-info">
         <p class="align-center">
-            The Fantom fWallet has been created as a Progressive Web App (PWA) which is easy to launch on all platforms:
+            The ANB Wallet has been created as a Progressive Web App (PWA) which is easy to launch on all platforms:
         </p>
 
         <div class="inst-buttons">
@@ -104,15 +104,15 @@ export default {
 
     methods: {
         showDesktopInfo() {
-            this.$refs.desktopInfo.show();
+            //this.$refs.desktopInfo.show();
         },
 
         showIOSInfo() {
-            this.$refs.iosInfo.show();
+            //this.$refs.iosInfo.show();
         },
 
         showAndroidInfo() {
-            this.$refs.androidInfo.show();
+            //this.$refs.androidInfo.show();
         },
     },
 };
